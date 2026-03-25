@@ -34,6 +34,7 @@
 4. CI 发布可执行：
    - push 到 `main/master` 自动触发 `Release Alpha` workflow。
    - 如需手动兜底，可 `workflow_dispatch` 触发同一 workflow。
+   - 分支验证时建议 `workflow_dispatch + dry_run=true`，只验流程不发版。
 
 ## 5. 发布后核对
 
