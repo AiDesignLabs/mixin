@@ -1,6 +1,6 @@
 {
   "name": "@mixin/runtime",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.1",
   "private": true,
   "description": "Runtime primitives for Mixin 2D/3D hybrid scenes",
   "license": "MIT",

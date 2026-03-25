@@ -1,6 +1,6 @@
 {
   "name": "@mixin/nuxt",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.1",
   "private": true,
   "description": "Nuxt integration entry for Mixin",
   "license": "MIT",
