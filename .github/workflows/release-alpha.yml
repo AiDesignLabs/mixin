@@ -6,6 +6,17 @@ on:
       - main
       - master
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Validate only (skip bump/tag/release)"
+        required: false
+        type: boolean
+        default: false
+      preid:
+        description: "Prerelease identifier"
+        required: false
+        type: string
+        default: "alpha"
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -28,17 +39,19 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: pnpm
 
-      - name: Enable Corepack (pnpm)
-        run: |
-          corepack enable
-          corepack prepare pnpm@9.15.0 --activate
-          pnpm --version
+      - name: Verify pnpm
+        run: pnpm --version
 
       - name: Install Vite+
         run: npm install -g vite-plus
@@ -55,16 +68,24 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Bump prerelease version and push tag
-        run: npx bumpp --preid alpha --release prerelease package.json packages/*/package.json --commit --tag --push --yes
+        if: ${{ !(github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'true') }}
+        run: npx bumpp --preid "${{ github.event_name == 'workflow_dispatch' && github.event.inputs.preid || 'alpha' }}" --release prerelease package.json packages/*/package.json --commit --tag --push --yes
 
       - name: Resolve latest tag
+        if: ${{ !(github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'true') }}
         id: tag
         run: echo "value=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
 
       - name: Create prerelease
+        if: ${{ !(github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'true') }}
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.tag.outputs.value }}
           prerelease: true
           generate_release_notes: true
           body_path: .github/release-notes-alpha.md
+
+      - name: Dry-run summary
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'true' }}
+        run: |
+          echo "Dry run mode enabled: validation finished, release steps skipped."
