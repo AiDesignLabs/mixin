@@ -1,80 +1,185 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  --bg-0: #020714;
+  --bg-1: #0f1831;
+  --line: #2f3c74;
+  --text-main: #edf2ff;
+  --text-muted: #b4c0e6;
+  --mint: #67f6c7;
+  --card: rgba(8, 14, 32, 0.78);
+
+  font-family: "IBM Plex Sans", "Avenir Next", "Segoe UI", sans-serif;
+  line-height: 1.45;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  color: var(--text-main);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-.card {
-  padding: 2em;
+  background:
+    radial-gradient(circle at 18% 16%, #1d2b5f 0%, transparent 43%),
+    radial-gradient(circle at 78% 18%, #0f5545 0%, transparent 35%),
+    linear-gradient(150deg, var(--bg-0), var(--bg-1));
 }
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  min-height: 100vh;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.demo-page {
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.scene-shell {
+  width: min(1220px, 100%);
+  height: min(760px, calc(100vh - 48px));
+  min-height: 460px;
+  margin: 0 auto;
+  border: 1px solid color-mix(in oklab, var(--line), transparent 30%);
+  border-radius: 24px;
+  background: radial-gradient(circle at 10% 0%, rgba(43, 61, 119, 0.35), transparent 45%);
+}
+
+.hud-panel {
+  pointer-events: auto;
+  max-width: 620px;
+  margin: 26px;
+  padding: 20px 22px;
+  border-radius: 18px;
+  background: var(--card);
+  border: 1px solid color-mix(in oklab, var(--line), transparent 24%);
+  backdrop-filter: blur(12px);
+}
+
+.label {
+  margin: 0 0 6px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mint);
+}
+
+.hud-panel h1 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.1;
+}
+
+.hud-panel p {
+  margin: 12px 0 0;
+  color: var(--text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.actions.compact {
+  margin-top: 10px;
+}
+
+.actions button {
+  border: 1px solid color-mix(in oklab, var(--mint), transparent 46%);
+  border-radius: 999px;
+  background: #11253b;
+  color: var(--text-main);
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: transform 180ms ease;
+}
+
+.actions button:hover {
+  transform: translateY(-1px);
+}
+
+.actions button.ghost {
+  border-color: color-mix(in oklab, var(--line), transparent 10%);
+  background: transparent;
+}
+
+.actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.slider-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.slider-row label,
+.slider-row span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.slider-row input {
+  width: 100%;
+}
+
+.state {
+  margin: 9px 0 0;
+  font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  font-size: 12px;
+}
+
+.state.error {
+  color: #ff7c9f;
+}
+
+.anchor-card {
+  width: 250px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in oklab, var(--mint), transparent 40%);
+  background: rgba(4, 11, 24, 0.88);
+}
+
+.anchor-card.secondary {
+  border-color: color-mix(in oklab, #7bb6ff, transparent 40%);
+}
+
+.anchor-card h2 {
+  margin: 4px 0;
+  font-size: 20px;
+}
+
+.anchor-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .demo-page {
+    padding: 14px;
   }
-  a:hover {
-    color: #747bff;
+
+  .scene-shell {
+    min-height: 520px;
   }
-  button {
-    background-color: #f9f9f9;
+
+  .hud-panel {
+    margin: 12px;
+    max-width: calc(100% - 24px);
   }
 }

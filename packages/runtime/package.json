@@ -1,0 +1,30 @@
+{
+  "name": "@mixin/runtime",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Runtime primitives for Mixin 2D/3D hybrid scenes",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "vp build",
+    "dev": "vp dev",
+    "test": "vp test run"
+  },
+  "devDependencies": {
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  }
+}

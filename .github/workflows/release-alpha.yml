@@ -1,0 +1,61 @@
+name: Release Alpha
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+concurrency:
+  group: release-alpha-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install Vite+
+        run: npm install -g vite-plus
+
+      - name: Install dependencies
+        run: vp install
+
+      - name: Validate
+        run: vp run ci
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump prerelease version and push tag
+        run: npx bumpp --preid alpha --release prerelease package.json packages/*/package.json --commit --tag --push --yes
+
+      - name: Resolve latest tag
+        id: tag
+        run: echo "value=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
+
+      - name: Create prerelease
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.value }}
+          prerelease: true
+          generate_release_notes: true
+          body_path: .github/release-notes-alpha.md

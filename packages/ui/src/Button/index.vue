@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { add } from '@wendraw/lib'
-import { add as add2 } from '@wendraw/lib2'
+import { add } from "@wendraw/lib";
+import { add as add2 } from "@wendraw/lib2";
 
 defineProps<{
-  text: string
-}>()
+  text: string;
+}>();
 </script>
 
 <template>

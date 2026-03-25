@@ -1,0 +1,32 @@
+{
+  "name": "@mixin/nuxt",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Nuxt integration entry for Mixin",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "vp build",
+    "dev": "vp dev"
+  },
+  "dependencies": {
+    "@mixin/components": "workspace:*",
+    "@nuxt/kit": "^3.21.2"
+  },
+  "peerDependencies": {
+    "nuxt": "^3.0.0"
+  }
+}

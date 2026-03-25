@@ -1,2 +1,2 @@
-export * from './lib'
-export { minus } from './lib'
+export * from "./lib";
+export { minus } from "./lib";

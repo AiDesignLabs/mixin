@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { add } from '@wendraw/lib'
+import { add } from "@wendraw/lib";
 
 defineProps<{
-  content: string
-}>()
+  content: string;
+}>();
 </script>
 
 <template>

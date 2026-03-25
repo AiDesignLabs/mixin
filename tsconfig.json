@@ -3,20 +3,14 @@
     "composite": true,
     "target": "esnext",
     "jsx": "preserve",
-    "lib": [
-      "esnext",
-      "dom"
-    ],
+    "lib": ["esnext", "dom"],
     "experimentalDecorators": true,
     "baseUrl": ".",
     "rootDir": ".",
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "types": [
-      "node",
-      "vite/client"
-    ],
+    "types": ["node", "vite-plus/client"],
     "allowJs": false,
     "strict": true,
     "strictFunctionTypes": true,
@@ -31,16 +25,6 @@
     "isolatedModules": true,
     "skipLibCheck": true
   },
-  "include": [
-    "packages",
-    "packages/inner",
-    "playground"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.md",
-    "**/dist",
-    "packages/.test",
-    "packages/_docs"
-  ]
+  "include": ["packages", "packages/inner", "playground"],
+  "exclude": ["node_modules", "**/*.md", "**/dist", "packages/.test", "packages/_docs"]
 }

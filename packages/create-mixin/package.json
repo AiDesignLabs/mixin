@@ -1,0 +1,14 @@
+{
+  "name": "create-mixin",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Scaffold starter projects for Mixin",
+  "license": "MIT",
+  "bin": {
+    "create-mixin": "./bin/create-mixin.mjs"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "node -e \"console.log('create-mixin: no build step')\""
+  }
+}
