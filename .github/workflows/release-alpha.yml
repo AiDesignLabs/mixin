@@ -7,6 +7,9 @@ on:
       - master
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 concurrency:
   group: release-alpha-${{ github.ref }}
   cancel-in-progress: false
@@ -30,6 +33,12 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare pnpm@9.15.0 --activate
+          pnpm --version
 
       - name: Install Vite+
         run: npm install -g vite-plus
